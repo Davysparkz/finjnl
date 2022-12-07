@@ -1,7 +1,6 @@
 import './App.css';
-//import React, {useState} from 'react';
-import dayjs from 'dayjs'
-//import Datepicker from 'react-tailwindcss-datepicker';
+import React, {useState} from 'react';
+import Datepicker from 'react-tailwindcss-datepicker';
 
 function ProductCategoryRow({category}) {
   return (
@@ -107,19 +106,36 @@ function App() {
    //   <FilterableProductTable products={PRODUCTS} />
     //</div>
   //)
-	return (
-		<div className="flex flex-col items-center mt-16">
-		<h1 className="text-4xl text-center">
-		Tailwind CSS makes styling React components easier!
-		</h1>
-		<button className="bg-black text-white p-2.5 w-fit mt-9">
-		{/* Get Started */}
-    {dayjs()}
-		</button>
+	//return (
+	//	<div className="flex flex-col items-center mt-16">
+	//	<h1 className="text-4xl text-center">
+	//	Tailwind CSS makes styling React components easier!
+	//	</h1>
+	//	<button className="bg-black text-white p-2.5 w-fit mt-9">
+	//	Get Started
+	//	</button>
 
+	//	</div>
+	//);
+
+	const [value, setValue] = useState({
+		startDate: new Date(),
+		endDate: new Date().setMonth(11)
+	});
+
+	const handleValueChange = (newValue) => {
+		console.log(`newValue: ${newValue}`);
+		setValue(newValue);
+	}
+
+	return (
+		<div>
+			<Datepicker
+				value={value}
+				onChange={handleValueChange}
+			/>
 		</div>
 	);
-
 }
 
 export default App;

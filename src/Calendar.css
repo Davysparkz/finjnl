@@ -1,0 +1,11 @@
+.Calendar {
+    background-color: greenyellow;
+    width: 300px;
+    height: 300px;
+
+}
+
+.CalendarHeader {
+    background-color:burlywood;
+    text-align: center;
+}
