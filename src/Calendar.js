@@ -2,40 +2,14 @@ import './Calendar.css';
 import dayjs from 'dayjs'
 import {useState} from 'react'
 
-function DayHeader({dayText}) {
-    // TODO: `inline-block align-* not working`
+const W=10
+const H=10
 
-    return (
-        <div className="inline-block align-middle w-10 h-10 text-center">{dayText}</div>
-    )
-}
-
-function CalendarHeader() {
-    return (
-        <div className="CalendarHeader flex">
-            <DayHeader dayText={'M'}/>
-            <DayHeader dayText={'T'}/>
-            <DayHeader dayText={'W'}/>
-            <DayHeader dayText={'T'}/>
-            <DayHeader dayText={'F'}/>
-            <DayHeader dayText={'S'}/>
-            <DayHeader dayText={'S'}/>
-        </div>
-    )
-}
-
-function CalendarBody() {
-    return (
-        <div className="CalendarBody">
-            <CalendarMonth numOfDays={31} startWeekDay={2} endWeekDay={3}></CalendarMonth>
-        </div>
-    )
-}
 
 function CalendarYear() {
     return (
         <div className="CalendarYear">
-           {dayjs().format('YYYY')}
+                <CalendarMonth numOfDays={31} startWeekDay={2} endWeekDay={3}></CalendarMonth>
         </div>
     )
 }
@@ -43,7 +17,7 @@ function CalendarYear() {
 function CalendarDay({day}) {
 
     return (
-        <div className="CalendarDay bg-red-200 w-10 h-10 text-center font-bold">
+        <div className={`CalendarDay bg-red-200 w-${W} text-center font-bold`}>
             {day}
         </div>
     )
@@ -61,7 +35,7 @@ function CalendarWeek({startDay, endDay}) {
     }
 
     return (
-        <div className="CalendarWeek flex bg-blue-400 justify-center divide-x-2 divide-blue-400">
+        <div className={`CalendarWeek flex items-center bg-blue-400 h-${H} divide-x-2 divide-blue-400`}>
             {getDaysPerRow()}
         </div>
     )
@@ -90,9 +64,40 @@ function CalendarMonth({numOfDays, startWeekDay, endWeekDay}) {
     )
 }
 
-function Calendar({year, month}) {
+function DayHeader({dayText}) {
+    // TODO: `inline-block align-* not working`
+
     return (
-      <div className="Calendar ">
+        <div className={`inline-block text-center w-${W}`}>{dayText}</div>
+    )
+}
+
+
+function CalendarHeader() {
+    return (
+        <div className={`CalendarHeader flex items-center h-${H}`}>
+            <DayHeader dayText={'M'}/>
+            <DayHeader dayText={'T'}/>
+            <DayHeader dayText={'W'}/>
+            <DayHeader dayText={'T'}/>
+            <DayHeader dayText={'F'}/>
+            <DayHeader dayText={'S'}/>
+            <DayHeader dayText={'S'}/>
+        </div>
+    )
+}
+
+function CalendarBody() {
+    return (
+        <div className="CalendarBody">
+            <CalendarYear></CalendarYear>
+        </div>
+    )
+}
+
+function Calendar() {
+    return (
+      <div className="Calendar mt-3 flex flex-col">
         <CalendarHeader></CalendarHeader>
         <CalendarBody></CalendarBody>
       </div>
