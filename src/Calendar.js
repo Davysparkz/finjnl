@@ -1,6 +1,5 @@
 import './Calendar.css';
 import dayjs from 'dayjs'
-import {useState} from 'react'
 
 const W=10
 const H=10
@@ -9,16 +8,27 @@ const H=10
 function CalendarYear() {
     return (
         <div className="CalendarYear">
-                <CalendarMonth numOfDays={31} startWeekDay={2} endWeekDay={3}></CalendarMonth>
+                <CalendarMonth numOfDays={dayjs().daysInMonth()} startWeekDay={2} endWeekDay={3}></CalendarMonth>
         </div>
     )
 }
 
-function CalendarDay({day}) {
+function CalendarDayAdornment({ isSpentDay, isToday }) {
+    const todayStyle = 'outline outline-1 outline-offset-2 outline-red-500'
+
+    return (isSpentDay &&
+        <div className={`CalendarDayAdornment bg-green-700 w-1 h-1 rounded-full ${isToday ? todayStyle : ''}`}>
+
+        </div>
+    )
+}
+
+function CalendarDay({day, isSpentDay}) {
 
     return (
-        <div className={`CalendarDay bg-red-200 w-${W} text-center font-bold`}>
-            {day}
+        <div className={`CalendarDay flex flex-col items-center justify-start bg-red-200 w-${W} font-bold`}>
+            <div className="pb-1">{day}</div>
+            {day && <CalendarDayAdornment isSpentDay={day <= dayjs().date()} isToday={day === dayjs().date()} />}
         </div>
     )
 }
@@ -29,13 +39,13 @@ function CalendarWeek({startDay, endDay}) {
         const daysPerRow = [];
 
         for (let i = startDay; i <= endDay; i++) {
-            daysPerRow.push(<CalendarDay day={i} key={i}/>)
+            daysPerRow.push(<CalendarDay day={i <= dayjs().daysInMonth() ? i : null} isSpentDay={true} key={i}/>)
         }
         return daysPerRow
     }
 
     return (
-        <div className={`CalendarWeek flex items-center bg-blue-400 h-${H} divide-x-2 divide-blue-400`}>
+        <div className={`CalendarWeek flex items-stretch bg-blue-400 h-${H} divide-x-2 divide-blue-400`}>
             {getDaysPerRow()}
         </div>
     )
@@ -68,7 +78,7 @@ function DayHeader({dayText}) {
     // TODO: `inline-block align-* not working`
 
     return (
-        <div className={`inline-block text-center w-${W}`}>{dayText}</div>
+        <div className={`DayHeader inline-block text-center w-${W}`}>{dayText}</div>
     )
 }
 
