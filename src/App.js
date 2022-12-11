@@ -36,10 +36,6 @@ function AppBody() {
 				{dayjs().locale('en-us').localeData().weekdaysMin()}
 			</div>
 			<div>
-				isToday = {" "}
-				{dayjs().isToday() ? 'true' : 'false'}
-			</div>
-			<div>
 				{dayjs().startOf('month').day()-1}
 			</div>
 			<div>

@@ -1,9 +1,15 @@
 import './Calendar.css';
 import dayjs from 'dayjs'
+import * as cal from './util'
 
 const W=10
 const H=10
 
+var cdata = {
+    year: '2022',
+    month: cal.months.JUL,
+    startWeekDay: cal.weekdays.FRI
+}
 
 function CalendarDayAdornment({ isSpentDay, isToday }) {
     const todayStyle = 'outline outline-1 outline-offset-2 outline-red-500'
@@ -52,37 +58,36 @@ function CalendarWeek({days}) {
 }
 
 
-function CalendarMonth({numOfDays, startWeekDay, endWeekDay}) {
+function CalendarMonth({month, startWeekDay, isLeapYear=false}) {
     const getDaysPerCol= () => {
         let daysPerCol = [];
 
         let day = 1
         let days = []
-        // todo: make this loop flexible by taking account of expanding and shrinking months
-        for (let i=0; i < 5; i++) {
-            if (i===0) { // start week of month
-                for (let w=0; w < startWeekDay; w++) {
+
+        let numOfWeeks = cal.getNumWeeksForMonth(month, startWeekDay,  isLeapYear)
+        let numOfDays = cal.getNumDaysForMonth(month, isLeapYear)
+
+        for (let i=1; i <= numOfWeeks; i++) {
+            if (i === 1) { // first week
+                for (let j =1; j < cal.unpadZero(startWeekDay); j++) {
                     days.push(0)
                 }
-                for (let m=startWeekDay; m < 7; m++) {
+                for (let w = cal.unpadZero(startWeekDay); w <= cal.week_total; w++) {
                     days.push(day)
                     day = day + 1
                 }
-            } else if (i===4) { // end week of month
-                while (day <= numOfDays) {
-                    days.push(day)
-                    day = day + 1
-                }
-                for (let n=endWeekDay; n < 6; n++) {
-                    days.push(0)
-                }
-            } else { // mid weeks of month
-                for (let k=0; k < 7; k++) {
-                    days.push(day)
-                    day = day + 1
+            } else {  // the remainder of the week
+                for (let j = 1; j <= cal.week_total; j++) {
+                    if (day > numOfDays) {
+                        days.push(0)
+                    } else {
+                        days.push(day)
+                        day = day + 1
+                    }
                 }
             }
-            const d = days.splice(0, 7)
+            const d = days.splice(0, cal.week_total)
             daysPerCol.push(<CalendarWeek days={d} key={i}/>)
            
         }
@@ -102,7 +107,11 @@ function CalendarMonth({numOfDays, startWeekDay, endWeekDay}) {
 function CalendarYear() {
     return (
         <div className="CalendarYear">
-                <CalendarMonth numOfDays={dayjs().daysInMonth()} startWeekDay={dayjs('2022-01-01').startOf('month').day()-1} endWeekDay={dayjs('2022-01-01').endOf('month').day()-1}></CalendarMonth>
+                <CalendarMonth 
+                    month={cdata.month} 
+                    startWeekDay={cdata.startWeekDay} 
+                    isLeapYear={false}
+                />
         </div>
     )
 }
