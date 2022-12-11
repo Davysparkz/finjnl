@@ -40,7 +40,10 @@ function AppBody() {
 				{dayjs().isToday() ? 'true' : 'false'}
 			</div>
 			<div>
-				{dayjs().date()}
+				{dayjs().startOf('month').day()-1}
+			</div>
+			<div>
+				{dayjs().endOf('month').day()-1}
 			</div>
 			<Calendar></Calendar>
 			<MoneyStats></MoneyStats>
