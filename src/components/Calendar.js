@@ -1,15 +1,59 @@
-import './Calendar.css';
+import '../styles/Calendar.css';
 import dayjs from 'dayjs'
-import * as cal from './util'
+import * as cal from '../utils/util'
 
 const W=10
 const H=10
 
+// dates 
+const pmd = dayjs().subtract(1, 'month')
+const cmd = dayjs()
+const nmd =  dayjs().add(1, 'month')
+
+const pyd = dayjs().subtract(1,  'year')
+const cyd = dayjs()
+const nyd = dayjs().add(1, 'year')
+
+// months
+const pm = dayjs().subtract(1, 'month').month()
+const cm = dayjs().month()
+const nm = dayjs().add(1, 'month').month()
+
+// years
+const py = pyd.year()
+const cy  = cyd.year()
+const ny = nyd.year()
+
+// start week days
+const pswd = pmd.startOf('month').day()
+const cswd = cmd.startOf('month').day()
+const nswd = nmd.startOf('month').day()
+
 var cdata = {
-    year: '2022',
-    month: cal.months.JUL,
-    startWeekDay: cal.weekdays.FRI
+    prev_year: py,
+    year: cy,
+    next_year: ny,
+    prev_month: cal.padMonthZero(pm+1),
+    month: cal.padMonthZero(cm+1),
+    next_month: cal.padMonthZero(nm+1),
+    prev_startWeekDay: cal.padWeekZero(pswd),  
+    startWeekDay: cal.padWeekZero(cswd),
+    next_startWeekDay: cal.padWeekZero(nswd)
 }
+
+class CalendarData {
+    static currentDate = dayjs()
+    static getCurrentDate() { 
+        return this.currentDate
+    }
+    static getPreviousYearDate(num) {
+        return this.currentDate.subtract(num, 'year')
+    }
+    static getNextYearDate(num) {
+        return this.currentDate.add(num, 'year')
+    }
+}
+
 
 function CalendarDayAdornment({ isSpentDay, isToday }) {
     const todayStyle = 'outline outline-1 outline-offset-2 outline-red-500'
@@ -103,15 +147,34 @@ function CalendarMonth({month, startWeekDay, isLeapYear=false}) {
     )
 }
 
-
-function CalendarYear() {
+function CalendarMonthHeader({month, year}) {
+    
     return (
-        <div className="CalendarYear">
+        <div className="CalendarMonthHeader flex items-center justify-center space-x-2 h-5">
+            <div>{cal.getMonthName(month)} </div>
+            <div>{year}</div>
+        </div>
+    )
+}
+
+function CalendarMonths() {
+    return (
+        <div className="CalendarMonths flex space-x-8 flex-no-wrap">
+                <CalendarMonth 
+                    month={cdata.prev_month} 
+                    startWeekDay={cdata.prev_startWeekDay} 
+                    isLeapYear={false}
+                />
                 <CalendarMonth 
                     month={cdata.month} 
                     startWeekDay={cdata.startWeekDay} 
                     isLeapYear={false}
                 />
+                    {/* <CalendarMonth 
+                    month={cdata.next_month} 
+                    startWeekDay={cdata.next_startWeekDay} 
+                    isLeapYear={false}
+                /> */}
         </div>
     )
 }
@@ -140,7 +203,7 @@ function CalendarHeader() {
 function CalendarBody() {
     return (
         <div className="CalendarBody">
-            <CalendarYear></CalendarYear>
+            <CalendarMonths></CalendarMonths>
         </div>
     )
 }
@@ -148,6 +211,7 @@ function CalendarBody() {
 function Calendar() {
     return (
       <div className="Calendar mt-3 flex flex-col">
+        <CalendarMonthHeader month={cdata.month} year={cdata.year}/>
         <CalendarHeader></CalendarHeader>
         <CalendarBody></CalendarBody>
       </div>

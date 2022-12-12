@@ -27,6 +27,9 @@ export const week_total = 7
 export const month_total = 12
 
 export function getWeekdayName(weekday) {
+    if (typeof weekday === 'number') {
+
+    }
 		switch (weekday) {
 				case '01': return 'MON'
 				case '02': return 'TUE'
@@ -57,21 +60,31 @@ export function getMonthName(month) {
 		}
 }
 
-export function padZero(weekday) {
-    switch (weekday) {
-        case 1: return "01"
-        case 2: return '02'
-        case 3: return '03'
-        case 4: return '04'
-        case 5: return '05'
-        case 6: return '06'
-        case 7: return '07'
-        default: return ''
+export function padWeekZero(week) {
+    if (typeof week === 'number') {
+        if (week > 0 && week < 8) {
+            let w = week % 8
+            return `0${w}`
+        }
     }
+    return ''
 }
 
-export function unpadZero(weekday) {
-    switch (weekday) {
+export function padMonthZero(month) {
+    if (typeof month === 'number') {
+        let m = month % 13
+        if (m > 0 && m < 10) {
+            return `0${m}`
+        }
+        if (m > 9 && m < 13) {
+            return `${m}`
+        }
+    }
+    return ''
+}
+
+export function unpadZero(num) {
+    switch (num) {
         case "01": return 1
         case '02': return 2
         case '03': return 3
@@ -79,6 +92,11 @@ export function unpadZero(weekday) {
         case '05': return 5
         case '06': return 6
         case '07': return 7
+        case '08': return 8
+        case '09': return 9
+        case '10': return 10
+        case '11': return 11
+        case '12': return 12
         default: return 0
     }
 }

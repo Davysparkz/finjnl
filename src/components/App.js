@@ -1,16 +1,8 @@
-import './App.css';
-//import React, {useState} from 'react';
+import '../styles/App.css';
 import dayjs from 'dayjs'
-import * as localeData from 'dayjs/plugin/localeData'
-import * as duration from 'dayjs/plugin/duration'
-import * as isToday from 'dayjs/plugin/isToday'
-//import Datepicker from 'react-tailwindcss-datepicker';
 import Calendar from './Calendar'
 import MoneyStats from './MoneyStats'
-
-dayjs.extend(localeData)
-dayjs.extend(duration)
-dayjs.extend(isToday)
+import * as cal from '../utils/util'
 
 
 function AppHeader() {
@@ -24,6 +16,8 @@ function AppHeader() {
 }
 
 function AppBody() {
+	const nm = dayjs().add(1, 'month')
+
 	return (
 		<div className="AppBody flex flex-col items-center bg-blue-600">
 			<h1 className="text-4xl text-center text-teal-400 mt-2">
@@ -33,16 +27,10 @@ function AppBody() {
     			{dayjs().format('dddd')}
 			</button>
 			<div>
-				{dayjs().locale('en-us').localeData().weekdaysMin()}
-			</div>
-			<div>
-				{dayjs.duration().weeks()}	
-			</div>
-			<div>
-				{dayjs().startOf('month').day()-1}
-			</div>
-			<div>
-				{dayjs().endOf('month').day()-1}
+				{ cal.getWeekdayName(
+					cal.padWeekZero(nm.startOf('month').day()+1)
+					)
+				}
 			</div>
 			<Calendar></Calendar>
 			<MoneyStats></MoneyStats>
