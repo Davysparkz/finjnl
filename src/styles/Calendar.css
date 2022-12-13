@@ -1,12 +1,47 @@
-.Calendar {
-    
+@tailwind base;
+@tailwind components;
+
+
+@layer components {
+ .Calendar {
+    @apply mt-3 flex flex-col;
 }
 
-.CalendarHeader {
-    background-color:burlywood;
-    
+ .CalendarBody {
+    @apply  w-72;
 }
 
-.CalendarMonths {
-    
+ .CalendarMonths {
+    @apply  flex  space-x-8  snap-x  snap-mandatory  overflow-x-scroll  scroll-smooth;
 }
+
+ .CalendarMonth {
+    @apply  flex  flex-col  snap-center  divide-y-2  divide-blue-400;
+}
+
+ .CalendarMonthHeader {
+    @apply  flex  items-center  justify-center  space-x-2  h-5;
+}
+
+ .DaysOfWeekHeader {
+    @apply  flex  items-center  h-10 bg-[burlywood];
+}
+
+ .CalendarWeek {
+    @apply  flex  items-stretch  h-10 bg-blue-400  divide-x-2  divide-blue-400;
+}
+
+ .CalendarDay {
+    @apply  flex  flex-col  items-center  basis-10 bg-red-200  font-bold;
+}
+
+ .CalendarDayAdornment {
+   @apply  bg-green-700  w-1  h-1  rounded-full  order-1;
+} 
+
+.DayHeader {
+    @apply inline-block text-center w-10;
+}
+
+}
+@tailwind utilities;

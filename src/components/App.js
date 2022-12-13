@@ -3,6 +3,7 @@ import dayjs from 'dayjs'
 import Calendar from './Calendar'
 import MoneyStats from './MoneyStats'
 import * as cal from '../utils/util'
+import DayjsWrapper from '../utils/DayjsWrapper'
 
 
 function AppHeader() {
@@ -16,8 +17,6 @@ function AppHeader() {
 }
 
 function AppBody() {
-	const nm = dayjs().add(1, 'month')
-
 	return (
 		<div className="AppBody flex flex-col items-center bg-blue-600">
 			<h1 className="text-4xl text-center text-teal-400 mt-2">
@@ -26,11 +25,17 @@ function AppBody() {
 			<button className="bg-black text-white p-2.5 w-fit mt-4">
     			{dayjs().format('dddd')}
 			</button>
-			<div>
-				{ cal.getWeekdayName(
-					cal.padWeekZero(nm.startOf('month').day()+1)
+			<div> Next month = {" "}
+				{ cal.getMonthName(
+					DayjsWrapper.getNextMonthDateValue()
+				)}
+			</div>
+			<div> Next month start weekday = {" "}
+                { 
+					cal.getWeekdayName(
+						DayjsWrapper.getNextMonthStartWeekDayValue()
 					)
-				}
+				} 
 			</div>
 			<Calendar></Calendar>
 			<MoneyStats></MoneyStats>
@@ -40,7 +45,7 @@ function AppBody() {
 
 function App() {
 	return (
-		<div className="App flex flex-col">
+		<div className="App flex flex-col h-screen">
 			<AppHeader/> 
 			<AppBody/>
 		</div>

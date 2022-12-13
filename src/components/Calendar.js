@@ -1,65 +1,13 @@
 import '../styles/Calendar.css';
 import dayjs from 'dayjs'
 import * as cal from '../utils/util'
-
-const W=10
-const H=10
-
-// dates 
-const pmd = dayjs().subtract(1, 'month')
-const cmd = dayjs()
-const nmd =  dayjs().add(1, 'month')
-
-const pyd = dayjs().subtract(1,  'year')
-const cyd = dayjs()
-const nyd = dayjs().add(1, 'year')
-
-// months
-const pm = dayjs().subtract(1, 'month').month()
-const cm = dayjs().month()
-const nm = dayjs().add(1, 'month').month()
-
-// years
-const py = pyd.year()
-const cy  = cyd.year()
-const ny = nyd.year()
-
-// start week days
-const pswd = pmd.startOf('month').day()
-const cswd = cmd.startOf('month').day()
-const nswd = nmd.startOf('month').day()
-
-var cdata = {
-    prev_year: py,
-    year: cy,
-    next_year: ny,
-    prev_month: cal.padMonthZero(pm+1),
-    month: cal.padMonthZero(cm+1),
-    next_month: cal.padMonthZero(nm+1),
-    prev_startWeekDay: cal.padWeekZero(pswd),  
-    startWeekDay: cal.padWeekZero(cswd),
-    next_startWeekDay: cal.padWeekZero(nswd)
-}
-
-class CalendarData {
-    static currentDate = dayjs()
-    static getCurrentDate() { 
-        return this.currentDate
-    }
-    static getPreviousYearDate(num) {
-        return this.currentDate.subtract(num, 'year')
-    }
-    static getNextYearDate(num) {
-        return this.currentDate.add(num, 'year')
-    }
-}
-
+import DayjsWrapper from '../utils/DayjsWrapper'
 
 function CalendarDayAdornment({ isSpentDay, isToday }) {
     const todayStyle = 'outline outline-1 outline-offset-2 outline-red-500'
 
     return (isSpentDay &&
-        <div className={`CalendarDayAdornment bg-green-700 w-1 h-1 rounded-full order-1 ${isToday ? todayStyle : ''}`}>
+        <div className={`CalendarDayAdornment ${isToday ? todayStyle : ''}`}>
         </div>
     )
 }
@@ -68,14 +16,14 @@ function CalendarDay({day}) {
     let el 
     if (day===0) {
         el =   (
-            <div className={`CalendarDay flex flex-col items-center  bg-red-200 w-10 font-bold w-${W}`}>
+            <div className={`CalendarDay`}>
                 {""}
             </div>
         )
     }
     else {
         el = (
-            <div className={`CalendarDay flex flex-col items-center  bg-red-200 w-10 font-bold w-${W}`}>
+            <div className={`CalendarDay`}>
                 <div>{day}</div>
                 {day && <CalendarDayAdornment isSpentDay={day <= dayjs().date()} isToday={day === dayjs().date()} />}
             </div>
@@ -95,15 +43,23 @@ function CalendarWeek({days}) {
     }
 
     return (
-        <div className={`CalendarWeek flex items-stretch bg-blue-400 h-10 divide-x-2 divide-blue-400 h-${H}`}>
+        <div className={`CalendarWeek`}>
             {getDaysPerRow()}
         </div>
     )
 }
 
 
-function CalendarMonth({month, startWeekDay, isLeapYear=false}) {
-    const getDaysPerCol= () => {
+/**
+ * @property {object} props  - React prop object
+ * @property {number} props.year - the current calendar year
+ * @property {number} props.month - the current month in the calendar year
+ * @property {number} props.startWeekDay - the start-week-day of the current month
+ * @property {boolean} props.isLeapYear - whether the year is a leap year
+ */
+function CalendarMonth({year, month, startWeekDay, isLeapYear=false}) {
+
+    const getDaysPerCol= (month, startWeekDay, isLeapYear) => {
         let daysPerCol = [];
 
         let day = 1
@@ -111,6 +67,12 @@ function CalendarMonth({month, startWeekDay, isLeapYear=false}) {
 
         let numOfWeeks = cal.getNumWeeksForMonth(month, startWeekDay,  isLeapYear)
         let numOfDays = cal.getNumDaysForMonth(month, isLeapYear)
+
+        console.log('`getDaysPerCol()` :: numOfWeeks=', numOfWeeks)
+        console.log('`getDaysPerCol()` :: numOfDays=', numOfDays)
+
+        startWeekDay = cal.padWeekZero(cal.adjustWeek(parseInt(startWeekDay)))
+        console.log('`getDaysPerCol()` :: startWeekDay=', startWeekDay)
 
         for (let i=1; i <= numOfWeeks; i++) {
             if (i === 1) { // first week
@@ -141,8 +103,13 @@ function CalendarMonth({month, startWeekDay, isLeapYear=false}) {
 
 
     return (
-        <div className="CalendarMonth flex flex-col divide-y-2 divide-blue-400">
-            {getDaysPerCol()}
+        <div className="CalendarMonth">
+            <CalendarMonthHeader 
+                month={cal.padMonthZero(cal.adjustMonth(parseInt(month)))}
+                year={year}
+            />
+            <DaysOfWeekHeader/>
+            {getDaysPerCol(month, startWeekDay, isLeapYear)}
         </div>
     )
 }
@@ -150,7 +117,7 @@ function CalendarMonth({month, startWeekDay, isLeapYear=false}) {
 function CalendarMonthHeader({month, year}) {
     
     return (
-        <div className="CalendarMonthHeader flex items-center justify-center space-x-2 h-5">
+        <div className="CalendarMonthHeader">
             <div>{cal.getMonthName(month)} </div>
             <div>{year}</div>
         </div>
@@ -159,36 +126,63 @@ function CalendarMonthHeader({month, year}) {
 
 function CalendarMonths() {
     return (
-        <div className="CalendarMonths flex space-x-8 flex-no-wrap">
-                <CalendarMonth 
-                    month={cdata.prev_month} 
-                    startWeekDay={cdata.prev_startWeekDay} 
+        <div className="CalendarMonths">
+                 <CalendarMonth 
+                    year={DayjsWrapper.getPreviousMonthDate(3).year()}
+                    month={DayjsWrapper.getPreviousMonthDateValue(3)} 
+                    startWeekDay={DayjsWrapper.getPreviousMonthStartWeekDayValue(3)} 
+                    isLeapYear={false}
+                />                 
+                 <CalendarMonth 
+                    year={DayjsWrapper.getPreviousMonthDate(2).year()}
+                    month={DayjsWrapper.getPreviousMonthDateValue(2)} 
+                    startWeekDay={DayjsWrapper.getPreviousMonthStartWeekDayValue(2)} 
+                    isLeapYear={false}
+                />
+                 <CalendarMonth 
+                    year={DayjsWrapper.getPreviousMonthDate().year()}
+                    month={DayjsWrapper.getPreviousMonthDateValue()} 
+                    startWeekDay={DayjsWrapper.getPreviousMonthStartWeekDayValue()} 
                     isLeapYear={false}
                 />
                 <CalendarMonth 
-                    month={cdata.month} 
-                    startWeekDay={cdata.startWeekDay} 
+                    year={DayjsWrapper.getCurrentDate().year()}
+                    month={DayjsWrapper.getCurrentDateMonthValue()} 
+                    startWeekDay={DayjsWrapper.getCurrentDateStartWeekDayValue()} 
+                    isLeapYear={false}
+                /> 
+                <CalendarMonth 
+                    year={DayjsWrapper.getNextMonthDate().year()}
+                    month={DayjsWrapper.getNextMonthDateValue()} 
+                    startWeekDay={DayjsWrapper.getNextMonthStartWeekDayValue()} 
                     isLeapYear={false}
                 />
-                    {/* <CalendarMonth 
-                    month={cdata.next_month} 
-                    startWeekDay={cdata.next_startWeekDay} 
+                <CalendarMonth 
+                    year={DayjsWrapper.getNextMonthDate(2).year()}
+                    month={DayjsWrapper.getNextMonthDateValue(2)} 
+                    startWeekDay={DayjsWrapper.getNextMonthStartWeekDayValue(2)} 
                     isLeapYear={false}
-                /> */}
+                />       
+                <CalendarMonth 
+                    year={DayjsWrapper.getNextMonthDate(3).year()}
+                    month={DayjsWrapper.getNextMonthDateValue(3)} 
+                    startWeekDay={DayjsWrapper.getNextMonthStartWeekDayValue(3)} 
+                    isLeapYear={false}
+                />                                     
         </div>
     )
 }
 
 function DayHeader({dayText}) {
     return (
-        <div className={`DayHeader inline-block text-center w-${W}`}>{dayText}</div>
+        <div className={`DayHeader`}>{dayText}</div>
     )
 }
 
 
-function CalendarHeader() {
+function DaysOfWeekHeader() {
     return (
-        <div className={`CalendarHeader flex items-center h-${H}`}>
+        <div className={`DaysOfWeekHeader`}>
             <DayHeader dayText={'M'}/>
             <DayHeader dayText={'T'}/>
             <DayHeader dayText={'W'}/>
@@ -210,9 +204,7 @@ function CalendarBody() {
 
 function Calendar() {
     return (
-      <div className="Calendar mt-3 flex flex-col">
-        <CalendarMonthHeader month={cdata.month} year={cdata.year}/>
-        <CalendarHeader></CalendarHeader>
+      <div className="Calendar">
         <CalendarBody></CalendarBody>
       </div>
     );

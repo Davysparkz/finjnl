@@ -112,18 +112,18 @@ export default class DayjsWrapper {
     }
     /**
      * if the current month is [11]DEC and ```num``` is 5 then the return value is [6]JUL
-     * @param {number} num a value which months distance backwards from the current year
+     * @param {number} num a value months distance backwards from the current year
      * @returns a ```number``` which represents the previous month in the calendar year e.g. 0[JAN]-11[DEC]
      */
-    static getPreviousDateMonthValue(num) {
+    static getPreviousMonthDateValue(num) {
         return this.getPreviousMonthDate(num).month()
     }
     /**
      * if the current month is [11]DEC and ```num``` is 5 then the return value is [4]MAY
-     * @param {number} num a value which months distance forwards from the current year
+     * @param {number} num a value months distance forwards from the current year
      * @returns a ```number``` which represents the next month in the calendar year e.g. 0[JAN]-11[DEC]
      */
-    static getNextDateMonthValue(num) {
+    static getNextMonthDateValue(num) {
         return this.getNextMonthDate(num).month()
     }
     /**
@@ -134,17 +134,17 @@ export default class DayjsWrapper {
         return this.getCurrentDate().startOf('month').day()
     }
     /**
-     * @param {number} num a value which months distance backwards from the current year
+     * @param {number} num a value months distance backwards from the current year
      * @returns a ```number``` which represents the previous month's start-week-day in the calendar year e.g. 0[SUN]-6[SAT]
      */
-    static getPreviousDateStartWeekDayValue(num) {
+    static getPreviousMonthStartWeekDayValue(num) {
         return this.getPreviousMonthStartWeekDayDate(num).day()
     }
     /**
-     * @param {number} num a value which months distance forwards from the current year
+     * @param {number} num a value months distance forwards from the current year
      * @returns a ```number``` which represents the next month's start-week-day in the calendar year e.g. 0[SUN]-6[SAT]
      */
-    static getNextDateStartWeekDayValue(num) {
+    static getNextMonthStartWeekDayValue(num) {
         return this.getNextMonthStartWeekDayDate(num).day()
     }
     /**
@@ -155,14 +155,14 @@ export default class DayjsWrapper {
         return this.getCurrentDate().endOf('month').day()
     }
     /**
-     * @param {number} num a value which months distance backwards from the current year
+     * @param {number} num a value months distance backwards from the current year
      * @returns a ```number``` which represents the previous month's end-week-day in the calendar year e.g. 0[SUN]-6[SAT]
      */
     static getPreviousDateEndWeekDayValue(num) {
         return this.getPreviousMonthEndWeekDayDate(num).day()
     }
     /**
-     * @param {number} num a value which months distance forwards from the current year
+     * @param {number} num a value months distance forwards from the current year
      * @returns a ```number``` which represents the next month's end-week-day in the calendar year e.g. 0[SUN]-6[SAT]
      */
     static getNextDateEndWeekDayValue(num) {
