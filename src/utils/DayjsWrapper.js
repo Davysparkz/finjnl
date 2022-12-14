@@ -1,4 +1,6 @@
 import dayjs from 'dayjs'
+import isToday from 'dayjs/plugin/isToday'
+dayjs.extend(isToday)
 
 /** `DayjsWrapper` provides static methods to make working with `dayjs()` easier. */
 export default class DayjsWrapper {
@@ -158,14 +160,34 @@ export default class DayjsWrapper {
      * @param {number} num a value months distance backwards from the current year
      * @returns a ```number``` which represents the previous month's end-week-day in the calendar year e.g. 0[SUN]-6[SAT]
      */
-    static getPreviousDateEndWeekDayValue(num) {
+    static getPreviousMonthEndWeekDayValue(num) {
         return this.getPreviousMonthEndWeekDayDate(num).day()
     }
     /**
      * @param {number} num a value months distance forwards from the current year
      * @returns a ```number``` which represents the next month's end-week-day in the calendar year e.g. 0[SUN]-6[SAT]
      */
-    static getNextDateEndWeekDayValue(num) {
+    static getNextMonthEndWeekDayValue(num) {
         return this.getNextMonthEndWeekDayDate(num).day()
+    }
+
+    /**
+     * @param {number} year a value representing the year
+     * @param {number} month a value representing the month
+     * @param {number} day a value representing the day
+     * @returns a ```boolean``` indicating whether it is before today's date
+     */
+    static isSpentDay(year, month, day) {
+        return dayjs(`${year}-${month}-${day}`).isBefore(dayjs())
+    }
+
+    /**
+     * @param {number} year a value representing the year
+     * @param {number} month a value representing the month
+     * @param {number} day a value representing the day
+     * @returns a ```boolean``` indicating whether it is today's date
+     */
+    static isToday(year, month, day) {
+        return dayjs(`${year}-${month}-${day}`).isToday()
     }
 }

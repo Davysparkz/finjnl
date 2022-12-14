@@ -25,18 +25,6 @@ function AppBody() {
 			<button className="bg-black text-white p-2.5 w-fit mt-4">
     			{dayjs().format('dddd')}
 			</button>
-			<div> Next month = {" "}
-				{ cal.getMonthName(
-					DayjsWrapper.getNextMonthDateValue()
-				)}
-			</div>
-			<div> Next month start weekday = {" "}
-                { 
-					cal.getWeekdayName(
-						DayjsWrapper.getNextMonthStartWeekDayValue()
-					)
-				} 
-			</div>
 			<Calendar></Calendar>
 			<MoneyStats></MoneyStats>
 		</div>

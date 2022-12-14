@@ -104,6 +104,8 @@ export function adjustWeek(week) {
     return adj
 }
 
+
+
 /**
  * @param {number} month - a value to convert from 0[JAN]-11[DEC] to 1[JAN]-12[DEC]
  * @returns `number` -  the transformed number in the range 1[JAN]-12[DEC]
@@ -187,7 +189,7 @@ export function getNumDaysForMonth(month, isLeapYear) {
     // which has 28 days clear and 29 days
     // in each leap year.
     month = padMonthZero(adjustMonth(parseInt(month)))
-    console.log('getNumDaysForMonth() :: month=', getMonthName(month))
+    //console.log('getNumDaysForMonth() :: month=', getMonthName(month))
 
     
     let days = 0
@@ -216,7 +218,7 @@ export function getNumDaysForMonth(month, isLeapYear) {
 export function getNumWeeksForMonth(month, startWeekday, isLeapYear=false) {
     startWeekday = padWeekZero(adjustWeek(parseInt(startWeekday)))
 
-    console.log('getNumWeeksForMonth() :: startWeekday=', getWeekdayName(startWeekday))
+    //console.log('getNumWeeksForMonth() :: startWeekday=', getWeekdayName(startWeekday))
 
     let days_count = getNumDaysForMonth(month, isLeapYear)
     

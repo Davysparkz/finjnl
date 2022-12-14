@@ -1,5 +1,7 @@
 import DayjsWrapper from "../utils/DayjsWrapper";
 import dayjs from 'dayjs'
+import isToday from 'dayjs/plugin/isToday'
+dayjs.extend(isToday)
 
 describe("DayjsWrapper - Current Date", () => {
     test('`getCurrentDate()` - to return the current `Dayjs()` object date', () => {
@@ -69,28 +71,28 @@ describe("DayjsWrapper - Previous Date", () => {
         expect(DayjsWrapper.getPreviousDateYearValue(5))
         .toBe(dayjs().subtract(5, 'year').year())
     })
-    test('`getPreviousDateMonthValue` - to return the previous 1-month value', () => {
-        expect(DayjsWrapper.getPreviousDateMonthValue())
+    test('`getPreviousMonthDateValue` - to return the previous 1-month value', () => {
+        expect(DayjsWrapper.getPreviousMonthDateValue())
         .toBe(dayjs().subtract(1, 'month').month())
     })
-    test('`getPreviousDateMonthValue(5)` - to return the previous 5-month value', () => {
-        expect(DayjsWrapper.getPreviousDateMonthValue(5))
+    test('`getPreviousMonthDateValue(5)` - to return the previous 5-month value', () => {
+        expect(DayjsWrapper.getPreviousMonthDateValue(5))
         .toBe(dayjs().subtract(5, 'month').month())
     })
-    test('`getPreviousDateStartWeekDayValue` - to return the previous 1-month start-week-day value', () => {
-        expect(DayjsWrapper.getPreviousDateStartWeekDayValue())
+    test('`getPreviousMonthStartWeekDayValue` - to return the previous 1-month start-week-day value', () => {
+        expect(DayjsWrapper.getPreviousMonthStartWeekDayValue())
         .toBe(dayjs().subtract(1, 'month').startOf('month').day())
     })
-    test('`getPreviousDateStartWeekDayValue(5)` - to return the previous 1-month start-week-day value', () => {
-        expect(DayjsWrapper.getPreviousDateStartWeekDayValue(5))
+    test('`getPreviousMonthStartWeekDayValue(5)` - to return the previous 1-month start-week-day value', () => {
+        expect(DayjsWrapper.getPreviousMonthStartWeekDayValue(5))
         .toBe(dayjs().subtract(5, 'month').startOf('month').day())
     })
-    test('`getPreviousDateEndWeekDayValue` - to return the previous 1-month start-week-day value', () => {
-        expect(DayjsWrapper.getPreviousDateEndWeekDayValue())
+    test('`getPreviousMonthEndWeekDayValue` - to return the previous 1-month start-week-day value', () => {
+        expect(DayjsWrapper.getPreviousMonthEndWeekDayValue())
         .toBe(dayjs().subtract(1, 'month').endOf('month').day())
     })
-    test('`getPreviousDateEndWeekDayValue(5)` - to return the previous 1-month start-week-day value', () => {
-        expect(DayjsWrapper.getPreviousDateEndWeekDayValue(5))
+    test('`getPreviousMonthEndWeekDayValue(5)` - to return the previous 1-month start-week-day value', () => {
+        expect(DayjsWrapper.getPreviousMonthEndWeekDayValue(5))
         .toBe(dayjs().subtract(5, 'month').endOf('month').day())
     })
 })
@@ -140,28 +142,71 @@ describe("DayjsWrapper - Next Date", () => {
         expect(DayjsWrapper.getNextDateYearValue(5))
         .toBe(dayjs().add(5, 'year').year())
     })
-    test('`getNextDateMonthValue` - to return the next 1-month value', () => {
-        expect(DayjsWrapper.getNextDateMonthValue())
+    test('`getNextMonthDateValue` - to return the next 1-month value', () => {
+        expect(DayjsWrapper.getNextMonthDateValue())
         .toBe(dayjs().add(1, 'month').month())
     })
-    test('`getNextDateMonthValue(5)` - to return the next 5-month value', () => {
-        expect(DayjsWrapper.getNextDateMonthValue(5))
+    test('`getNextMonthDateValue(5)` - to return the next 5-month value', () => {
+        expect(DayjsWrapper.getNextMonthDateValue(5))
         .toBe(dayjs().add(5, 'month').month())
     })
-    test('`getNextDateStartWeekDayValue` - to return the next 1-month start-week-day value', () => {
-        expect(DayjsWrapper.getNextDateStartWeekDayValue())
+    test('`getNextMonthStartWeekDayValue` - to return the next 1-month start-week-day value', () => {
+        expect(DayjsWrapper.getNextMonthStartWeekDayValue())
         .toBe(dayjs().add(1, 'month').startOf('month').day())
     })
-    test('`getNextDateStartWeekDayValue(5)` - to return the next 1-month start-week-day value', () => {
-        expect(DayjsWrapper.getNextDateStartWeekDayValue(5))
+    test('`getNextMonthStartWeekDayValue(5)` - to return the next 1-month start-week-day value', () => {
+        expect(DayjsWrapper.getNextMonthStartWeekDayValue(5))
         .toBe(dayjs().add(5, 'month').startOf('month').day())
     })
-    test('`getNextDateEndWeekDayValue` - to return the next 1-month start-week-day value', () => {
-        expect(DayjsWrapper.getNextDateEndWeekDayValue())
+    test('`getNextMonthEndWeekDayValue` - to return the next 1-month start-week-day value', () => {
+        expect(DayjsWrapper.getNextMonthEndWeekDayValue())
         .toBe(dayjs().add(1, 'month').endOf('month').day())
     })
-    test('`getNextDateEndWeekDayValue(5)` - to return the next 1-month start-week-day value', () => {
-        expect(DayjsWrapper.getNextDateEndWeekDayValue(5))
+    test('`getNextMonthEndWeekDayValue(5)` - to return the next 1-month start-week-day value', () => {
+        expect(DayjsWrapper.getNextMonthEndWeekDayValue(5))
         .toBe(dayjs().add(5, 'month').endOf('month').day())
     })
+})
+
+describe('DayjsWrapper - Day Test', () => {
+    test('`isSpentDay(2022, 12, 13)` - to return true if it is a past date', () => {
+        expect(DayjsWrapper.isSpentDay(2022, 12, 13))
+        .toBe(dayjs(`2022-12-13`).isBefore(dayjs()))
+    })
+
+    test('`isSpentDay(2022, 12, 13)` - to not return true if it is a future date', () => {
+        expect(DayjsWrapper.isSpentDay(2022, 12, 13))
+        .not
+        .toBe(dayjs(`2022-12-13`).isAfter(dayjs()))
+    })
+
+    test('`isSpentDay(2022, 12, 9)` - to return true if it is a past date', () => {
+        expect(DayjsWrapper.isSpentDay(2022, 12, 9))
+        .toBe(dayjs(`2022-12-9`).isBefore(dayjs()))
+    })
+
+    test('`isSpentDay(TodaysDate)` - to return false if it is today\'s date', () => {
+        let today = dayjs().format('YYYY-MM-DD')
+        let parts = today.split('-')
+        let year = parts[0]
+        let month = parts[1]
+        let day = parts[2]
+        expect(DayjsWrapper.isSpentDay(year, month, day))
+        .toBe(dayjs(today).isBefore(dayjs()))
+    })
+
+    test('`isToday(TodaysDate)` - to return true if it is today\'s date', () => {
+        let today = dayjs().format('YYYY-MM-DD')
+        let parts = today.split('-')
+        let year = parts[0]
+        let month = parts[1]
+        let day = parts[2]
+        expect(DayjsWrapper.isToday(year, month, day))
+        .toBe(dayjs(today).isToday())
+    })    
+
+    test('`isToday(2022-12-14)` - to return true if it is today\'s date', () => {
+        expect(DayjsWrapper.isToday(2022, 12, 14))
+        .toBe(dayjs('2022-12-14').isToday())
+    })    
 })

@@ -1,5 +1,4 @@
 import '../styles/Calendar.css';
-import dayjs from 'dayjs'
 import * as cal from '../utils/util'
 import DayjsWrapper from '../utils/DayjsWrapper'
 
@@ -12,9 +11,16 @@ function CalendarDayAdornment({ isSpentDay, isToday }) {
     )
 }
 
+/**
+ * @property {object} props  - React prop object
+ * @property {object} props.day - the default object
+ * @property {number} props.day.value - the day number 
+ * @property {boolean} props.day.isSpentDay - whether the day is before today
+ * @property {boolean} props.day.isToday - whether the day is today
+ */
 function CalendarDay({day}) {
     let el 
-    if (day===0) {
+    if (day.value===0) {
         el =   (
             <div className={`CalendarDay`}>
                 {""}
@@ -24,8 +30,10 @@ function CalendarDay({day}) {
     else {
         el = (
             <div className={`CalendarDay`}>
-                <div>{day}</div>
-                {day && <CalendarDayAdornment isSpentDay={day <= dayjs().date()} isToday={day === dayjs().date()} />}
+                <div>{day.value}</div>
+                {/* {day && <CalendarDayAdornment isSpentDay={day <= dayjs().date()} isToday={day === dayjs().date()} />} */}
+                {day.value && <CalendarDayAdornment isSpentDay={day.isSpentDay} isToday={day.isToday} />}
+
             </div>
         )
     }
@@ -59,36 +67,46 @@ function CalendarWeek({days}) {
  */
 function CalendarMonth({year, month, startWeekDay, isLeapYear=false}) {
 
-    const getDaysPerCol= (month, startWeekDay, isLeapYear) => {
+    const getDaysPerCol= (year, month, startWeekDay, isLeapYear) => {
         let daysPerCol = [];
 
         let day = 1
+    
         let days = []
 
         let numOfWeeks = cal.getNumWeeksForMonth(month, startWeekDay,  isLeapYear)
         let numOfDays = cal.getNumDaysForMonth(month, isLeapYear)
 
-        console.log('`getDaysPerCol()` :: numOfWeeks=', numOfWeeks)
-        console.log('`getDaysPerCol()` :: numOfDays=', numOfDays)
+        //console.log('`getDaysPerCol()` :: numOfWeeks=', numOfWeeks)
+        //console.log('`getDaysPerCol()` :: numOfDays=', numOfDays)
 
         startWeekDay = cal.padWeekZero(cal.adjustWeek(parseInt(startWeekDay)))
-        console.log('`getDaysPerCol()` :: startWeekDay=', startWeekDay)
+        //console.log('`getDaysPerCol()` :: startWeekDay=', startWeekDay)
 
+        month = cal.adjustMonth(month)
         for (let i=1; i <= numOfWeeks; i++) {
             if (i === 1) { // first week
                 for (let j =1; j < cal.unpadZero(startWeekDay); j++) {
-                    days.push(0)
+                    days.push({value: 0, isSpentDay: false, isToday: false})
                 }
                 for (let w = cal.unpadZero(startWeekDay); w <= cal.week_total; w++) {
-                    days.push(day)
+                    days.push({
+                        value: day,
+                        isSpentDay: DayjsWrapper.isSpentDay(year, month, day),
+                        isToday: DayjsWrapper.isToday(year, month, day)
+                    })
                     day = day + 1
                 }
             } else {  // the remainder of the week
                 for (let j = 1; j <= cal.week_total; j++) {
                     if (day > numOfDays) {
-                        days.push(0)
+                        days.push({value: 0, isSpentDay: false, isToday: false})
                     } else {
-                        days.push(day)
+                        days.push({
+                            value: day,
+                            isSpentDay: DayjsWrapper.isSpentDay(year, month, day),
+                            isToday: DayjsWrapper.isToday(year, month, day)
+                        })
                         day = day + 1
                     }
                 }
@@ -109,7 +127,7 @@ function CalendarMonth({year, month, startWeekDay, isLeapYear=false}) {
                 year={year}
             />
             <DaysOfWeekHeader/>
-            {getDaysPerCol(month, startWeekDay, isLeapYear)}
+            {getDaysPerCol(year, month, startWeekDay, isLeapYear)}
         </div>
     )
 }
@@ -127,7 +145,7 @@ function CalendarMonthHeader({month, year}) {
 function CalendarMonths() {
     return (
         <div className="CalendarMonths">
-                 <CalendarMonth 
+                 {/* <CalendarMonth 
                     year={DayjsWrapper.getPreviousMonthDate(3).year()}
                     month={DayjsWrapper.getPreviousMonthDateValue(3)} 
                     startWeekDay={DayjsWrapper.getPreviousMonthStartWeekDayValue(3)} 
@@ -144,14 +162,14 @@ function CalendarMonths() {
                     month={DayjsWrapper.getPreviousMonthDateValue()} 
                     startWeekDay={DayjsWrapper.getPreviousMonthStartWeekDayValue()} 
                     isLeapYear={false}
-                />
+                /> */}
                 <CalendarMonth 
                     year={DayjsWrapper.getCurrentDate().year()}
                     month={DayjsWrapper.getCurrentDateMonthValue()} 
                     startWeekDay={DayjsWrapper.getCurrentDateStartWeekDayValue()} 
                     isLeapYear={false}
                 /> 
-                <CalendarMonth 
+                {/* <CalendarMonth 
                     year={DayjsWrapper.getNextMonthDate().year()}
                     month={DayjsWrapper.getNextMonthDateValue()} 
                     startWeekDay={DayjsWrapper.getNextMonthStartWeekDayValue()} 
@@ -168,7 +186,7 @@ function CalendarMonths() {
                     month={DayjsWrapper.getNextMonthDateValue(3)} 
                     startWeekDay={DayjsWrapper.getNextMonthStartWeekDayValue(3)} 
                     isLeapYear={false}
-                />                                     
+                />                                      */}
         </div>
     )
 }
