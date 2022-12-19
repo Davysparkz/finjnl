@@ -1,7 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './components/App';
+//import App from './components/App';
+//import DayActivities from './components/DayActivities';
+//import EditDayActivity from './components/EditDayActivity'
+import Clndr from './components/Clndr'
 import reportWebVitals from './reportWebVitals';
 import {
   createBrowserRouter,
@@ -14,7 +17,7 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route
         path="/"  
-        element={<App />}
+        element={<Clndr />}
     >
     </Route>
   )

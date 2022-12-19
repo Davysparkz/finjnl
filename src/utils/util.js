@@ -66,7 +66,7 @@ export function getWeekdayName(weekday) {
  */
 export function getMonthName(month) {
     // todo: work on this to stop adding extra one month
-   // month = padMonthZero(adjustMonth(parseInt(month)))
+    month = padMonthZero(adjustMonth(parseInt(month)))
 
 		switch (month) {
 				case '01': return 'JAN'
@@ -87,7 +87,7 @@ export function getMonthName(month) {
 
 /**
  * @param {number} week - a value to convert from 0[SUN]-6[SAT] to 1[MON]-7[SUN]
- * @returns `number` -  the transformed number in the range 1[MON]-7[SUN]
+ * @returns `number` -  the transformed number in the range 1[MON]-7[SUN] or zero
  */
 export function adjustWeek(week) {
     let adj = 0
@@ -108,19 +108,45 @@ export function adjustWeek(week) {
 
 /**
  * @param {number} month - a value to convert from 0[JAN]-11[DEC] to 1[JAN]-12[DEC]
- * @returns `number` -  the transformed number in the range 1[JAN]-12[DEC]
+ * @returns `number` -  the transformed number in the range 1[JAN]-12[DEC] or zero
  */
 export function adjustMonth(month) {
     let adj = 0
-    if (typeof month === 'number') {
-        adj = (month + 1) % 13 
+    switch (month) {
+        case 0: 
+            adj = 1; break;
+        case 1: 
+            adj = 2; break;
+        case 2:
+            adj = 3; break;
+        case 3:
+            adj = 4; break;
+        case 4:
+            adj = 5; break;
+        case 5:
+            adj = 6; break;
+        case 6:
+            adj = 7; break;
+        case 7:
+            adj = 8; break;
+        case 8: 
+            adj = 9; break;
+        case 9:
+            adj = 10; break;
+        case 10:
+            adj = 11; break;
+        case 11: 
+            adj = 12; break;
+        default: break;
     }
     return adj
+
+
 }
 
 /**
  * @param {number} week - a value between the range 1[MON] - 7[SUN]
- * @returns `string` - zero-padded string equivalents of the `week`  '01' - '07'
+ * @returns `string` - zero-padded string equivalents of the `week`  '01' - '07' or an empty string
  */
 export function padWeekZero(week) {
     let padded = ''
@@ -135,7 +161,7 @@ export function padWeekZero(week) {
 
 /**
  * @param {number} month - a value between the range 1[JAN] - 12[DEC]
- * @returns `string` - zero-padded string equivalents of the `month`  '01' - '12'
+ * @returns `string` - zero-padded string equivalents of the `month`  '01' - '12' or an empty string
  */
 export function padMonthZero(month) {
     let padded = ''

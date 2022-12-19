@@ -16,7 +16,7 @@
 }
 
  .CalendarMonth {
-    @apply  flex  flex-col  snap-center  divide-y-2  divide-blue-400;
+    @apply  flex  flex-col  snap-center  divide-y-2  divide-blue-400 md:m-2;
 }
 
  .CalendarMonthHeader {

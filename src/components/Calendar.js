@@ -29,15 +29,17 @@ function CalendarDay({day}) {
     }
     else {
         el = (
-            <div className={`CalendarDay`}>
+            <div className={`CalendarDay`} onClick={() => handleDayClick(day) }>
                 <div>{day.value}</div>
-                {/* {day && <CalendarDayAdornment isSpentDay={day <= dayjs().date()} isToday={day === dayjs().date()} />} */}
                 {day.value && <CalendarDayAdornment isSpentDay={day.isSpentDay} isToday={day.isToday} />}
-
             </div>
         )
     }
     return el
+}
+
+function handleDayClick(day) {
+    console.log(day.isSpentDay)
 }
 
 function CalendarWeek({days}) {
@@ -65,25 +67,22 @@ function CalendarWeek({days}) {
  * @property {number} props.startWeekDay - the start-week-day of the current month
  * @property {boolean} props.isLeapYear - whether the year is a leap year
  */
-function CalendarMonth({year, month, startWeekDay, isLeapYear=false}) {
+function CalendarMonth({year, month, startWeekDay}) {
 
-    const getDaysPerCol= (year, month, startWeekDay, isLeapYear) => {
+    const getDaysPerCol = (year, month, startWeekDay) => {
         let daysPerCol = [];
 
         let day = 1
     
         let days = []
 
+        let isLeapYear = DayjsWrapper.isLeapYear(year)
         let numOfWeeks = cal.getNumWeeksForMonth(month, startWeekDay,  isLeapYear)
         let numOfDays = cal.getNumDaysForMonth(month, isLeapYear)
 
-        //console.log('`getDaysPerCol()` :: numOfWeeks=', numOfWeeks)
-        //console.log('`getDaysPerCol()` :: numOfDays=', numOfDays)
-
         startWeekDay = cal.padWeekZero(cal.adjustWeek(parseInt(startWeekDay)))
-        //console.log('`getDaysPerCol()` :: startWeekDay=', startWeekDay)
-
         month = cal.adjustMonth(month)
+
         for (let i=1; i <= numOfWeeks; i++) {
             if (i === 1) { // first week
                 for (let j =1; j < cal.unpadZero(startWeekDay); j++) {
@@ -119,21 +118,19 @@ function CalendarMonth({year, month, startWeekDay, isLeapYear=false}) {
         return daysPerCol
     }
 
-
     return (
         <div className="CalendarMonth">
             <CalendarMonthHeader 
-                month={cal.padMonthZero(cal.adjustMonth(parseInt(month)))}
+                month={month}
                 year={year}
             />
             <DaysOfWeekHeader/>
-            {getDaysPerCol(year, month, startWeekDay, isLeapYear)}
+            {getDaysPerCol(year, month, startWeekDay)}
         </div>
     )
 }
 
 function CalendarMonthHeader({month, year}) {
-    
     return (
         <div className="CalendarMonthHeader">
             <div>{cal.getMonthName(month)} </div>
@@ -149,43 +146,36 @@ function CalendarMonths() {
                     year={DayjsWrapper.getPreviousMonthDate(3).year()}
                     month={DayjsWrapper.getPreviousMonthDateValue(3)} 
                     startWeekDay={DayjsWrapper.getPreviousMonthStartWeekDayValue(3)} 
-                    isLeapYear={false}
                 />                 
                  <CalendarMonth 
                     year={DayjsWrapper.getPreviousMonthDate(2).year()}
                     month={DayjsWrapper.getPreviousMonthDateValue(2)} 
                     startWeekDay={DayjsWrapper.getPreviousMonthStartWeekDayValue(2)} 
-                    isLeapYear={false}
                 />
                  <CalendarMonth 
                     year={DayjsWrapper.getPreviousMonthDate().year()}
                     month={DayjsWrapper.getPreviousMonthDateValue()} 
                     startWeekDay={DayjsWrapper.getPreviousMonthStartWeekDayValue()} 
-                    isLeapYear={false}
                 /> */}
                 <CalendarMonth 
                     year={DayjsWrapper.getCurrentDate().year()}
                     month={DayjsWrapper.getCurrentDateMonthValue()} 
                     startWeekDay={DayjsWrapper.getCurrentDateStartWeekDayValue()} 
-                    isLeapYear={false}
                 /> 
                 {/* <CalendarMonth 
                     year={DayjsWrapper.getNextMonthDate().year()}
                     month={DayjsWrapper.getNextMonthDateValue()} 
                     startWeekDay={DayjsWrapper.getNextMonthStartWeekDayValue()} 
-                    isLeapYear={false}
                 />
                 <CalendarMonth 
                     year={DayjsWrapper.getNextMonthDate(2).year()}
                     month={DayjsWrapper.getNextMonthDateValue(2)} 
                     startWeekDay={DayjsWrapper.getNextMonthStartWeekDayValue(2)} 
-                    isLeapYear={false}
                 />       
                 <CalendarMonth 
                     year={DayjsWrapper.getNextMonthDate(3).year()}
                     month={DayjsWrapper.getNextMonthDateValue(3)} 
                     startWeekDay={DayjsWrapper.getNextMonthStartWeekDayValue(3)} 
-                    isLeapYear={false}
                 />                                      */}
         </div>
     )

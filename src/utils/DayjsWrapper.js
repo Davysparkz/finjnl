@@ -178,7 +178,7 @@ export default class DayjsWrapper {
      * @returns a ```boolean``` indicating whether it is before today's date
      */
     static isSpentDay(year, month, day) {
-        return dayjs(`${year}-${month}-${day}`).isBefore(dayjs())
+        return dayjs(`${year}-${month}-${day}`).isBefore(this.getCurrentDate())
     }
 
     /**
@@ -189,5 +189,22 @@ export default class DayjsWrapper {
      */
     static isToday(year, month, day) {
         return dayjs(`${year}-${month}-${day}`).isToday()
+    }
+
+    /**
+     * @param {number} year a value representing the year
+     * @returns a ```boolean``` indicating whether it is a leap
+     */
+    static isLeapYear(year) {
+        if (
+            ((year % 4) === 0) && ((year % 100) !== 0)
+        ) {
+            return true
+        } else if (     
+            ((year % 400) === 0) 
+        ) {
+            return true
+        }
+        return false
     }
 }

@@ -169,6 +169,7 @@ describe("DayjsWrapper - Next Date", () => {
 })
 
 describe('DayjsWrapper - Day Test', () => {
+
     test('`isSpentDay(2022, 12, 13)` - to return true if it is a past date', () => {
         expect(DayjsWrapper.isSpentDay(2022, 12, 13))
         .toBe(dayjs(`2022-12-13`).isBefore(dayjs()))
@@ -209,4 +210,24 @@ describe('DayjsWrapper - Day Test', () => {
         expect(DayjsWrapper.isToday(2022, 12, 14))
         .toBe(dayjs('2022-12-14').isToday())
     })    
+
+    test('isLeapYear(1700)` - to return false as it is not a leap year', () => {
+        expect(DayjsWrapper.isLeapYear(1700))
+        .toBeFalsy()
+    })
+
+    test('isLeapYear(1800)` - to return false as it is not a leap year', () => {
+        expect(DayjsWrapper.isLeapYear(1800))
+        .toBeFalsy()
+    })
+
+    test('isLeapYear(2000)` - to return true as it is a leap year', () => {
+        expect(DayjsWrapper.isLeapYear(2000))
+        .toBeTruthy()
+    })
+
+    test('isLeapYear(2022)` - to return false as it is not a leap year', () => {
+        expect(DayjsWrapper.isLeapYear(2022))
+        .toBeFalsy()
+    })
 })

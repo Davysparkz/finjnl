@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+
+
+@layer components {
+.EditDayActivity {
+    @apply flex flex-col  w-96 mt-20 ml-4;
+}
+
+.EditDescLabel {
+    @apply font-app-segoe text-primary text-xs;
+}
+
+.EditDesc {
+    @apply border mt-[13px];
+}
+
+.EditDesc textarea {
+    @apply w-full min-h-[28px] p-2 outline-none font-app-segoe text-xs;
+}
+
+.EditDesc textarea:focus {
+    @apply outline-none;
+}
+
+.EditDescActions {
+    @apply flex justify-end;
+}
+
+.EditDescActions button {
+    @apply font-bold m-2 text-sm;
+}
+
+.EditDescActions-save {
+    @apply text-green-400;
+}
+
+.EditDescActions-cancel {
+    @apply text-slate-400;
+}
+}
+@tailwind utilities;

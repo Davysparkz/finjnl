@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+
+
+@layer components {
+
+.Clndr {
+    @apply mt-28 mx-auto flex flex-col w-96;
+}
+
+.ClndrHead {
+    @apply flex flex-col h-16;
+}
+
+.DateActions {
+    @apply flex justify-center space-x-4 h-8 p-1 border;
+}
+
+.DayTitles {
+    @apply flex justify-around border h-8; 
+}
+
+.DayTitles div {
+    @apply border rounded-full w-8 h-8 flex items-center justify-center;
+}
+
+.DayTitles span {
+    @apply font-app-segoe font-bold text-primary;
+}
+
+.ClndrBody {
+    @apply border w-96 h-auto mt-3;
+}
+
+.Weeks {
+    @apply border h-10 w-full flex flex-col mb-2;
+}
+
+.Weeks:last-child {
+    @apply mb-0;
+}
+
+.Day {
+    @apply bg-primary-light w-10 h-10;
+}
+
+.Week {
+    @apply flex justify-around;
+}
+}
+@tailwind utilities;

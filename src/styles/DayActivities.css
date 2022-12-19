@@ -1,0 +1,106 @@
+@tailwind base;
+@tailwind components;
+
+
+@layer components {
+ .DayActivities {
+    @apply flex flex-col;
+}
+
+.DayActivityLabel {
+    @apply flex items-center justify-center border w-96 h-12 mt-2 ml-4;
+}
+
+.DayActivityLabel-text {
+    @apply font-bold text-lg text-primary font-app-segoe;
+}
+
+.ActivitiesControl {
+    @apply flex w-96 mt-6 ml-4 border justify-between;
+}
+
+.ActivitiesLabel {
+    @apply flex items-center justify-center w-40 h-7 ;
+}
+
+.ActivitiesLabel-text {
+    @apply font-bold text-xs text-primary font-app-segoe;
+}
+
+.ActivitiesActions {
+    @apply flex space-x-2 mr-2 ;
+}
+
+.ActivitiesLabel-btn {
+    @apply font-bold;
+}
+
+.ActivitiesLabel-btn__add {
+    @apply text-green-400;
+}
+
+.ActivitiesLabel-btn__rem {
+    @apply text-red-400;
+}
+
+.ActivityItems {
+    @apply flex flex-col w-96 h-96 border ml-4 mt-6 overflow-y-auto space-y-2;
+}
+
+.ActivityTotal {
+    @apply flex flex-col h-24 w-96 border ml-4 mt-6;
+}
+
+.TotalDailyMoneySpentLabel {
+    @apply flex items-center justify-center border h-6 m-2 w-3/5;
+}
+
+.TotalDailyMoneySpentLabel-text{
+    @apply text-lg font-bold text-primary font-app-segoe;
+}
+
+.TotalDailyMoneySpent {
+    @apply flex items-center justify-center border h-12 w-40 mx-auto;
+}
+
+.TotalDailyMoneySpent-text{
+    @apply font-bold text-2xl text-primary font-app-segoe;
+}
+
+.ActivityItem {
+    @apply flex items-center border h-10 min-h-[40px] w-auto mx-2;
+}
+
+.ActivityItem:first-child {
+    @apply mt-2;
+}
+
+.ActivityItem:last-child {
+    @apply mb-2;
+}
+
+.ItemIndex {
+    @apply flex items-center justify-center border w-6 h-6 rounded-full ml-2;
+}
+
+.ItemIndex-text {
+    @apply font-bold text-primary font-app-segoe;
+}
+
+.ItemDesc {
+    @apply border w-4/6 ml-4  h-6;
+}
+
+.ItemDesc-text {
+    @apply overflow-x-hidden pl-1 font-app-segoe text-[12px] text-primary;
+}
+
+.ItemTotal {
+    @apply border mx-2 overflow-x-hidden;
+}
+
+.ItemTotal-text {
+    @apply text-primary text-xl font-[500];
+}
+}
+@tailwind utilities;

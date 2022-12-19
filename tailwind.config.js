@@ -5,7 +5,18 @@ module.exports = {
   	  "./node_modules/react-tailwindcss-datepicker/dist/index.esm.js",
   ],
   theme: {
-    extend: {},
+    fontFamily: {
+      'app-segoe': ['"Segoe UI"',],
+    },
+    extend: {
+      colors: {
+        'primary': {
+          light: '#9590DE4D',  
+          DEFAULT: '#9590DE',
+          dark: '#9590DEFF',
+        },
+      },
+    },
   },
   plugins: [],
 }
