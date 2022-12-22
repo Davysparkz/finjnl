@@ -325,6 +325,7 @@ export function getNumWeeksForMonth(month, startWeekday, isLeapYear=false) {
 export function getEndWeekDaysForPrevMonth(prev_month) {
     let end_week_days = [] 
 
+
     return end_week_days
 }
 
@@ -335,5 +336,10 @@ export function getEndWeekDaysForPrevMonth(prev_month) {
 export function getStartWeekDaysForNextMonth(next_month) {
     let start_week_days = [] 
 
+
     return start_week_days
+}
+
+export function getDaySuffix(value) {
+
 }

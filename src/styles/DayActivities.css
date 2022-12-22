@@ -12,7 +12,7 @@
 }
 
 .DayActivityLabel-text {
-    @apply font-bold text-lg text-primary font-app-segoe;
+    @apply font-bold text-lg text-primary  ;
 }
 
 .ActivitiesControl {
@@ -24,7 +24,7 @@
 }
 
 .ActivitiesLabel-text {
-    @apply font-bold text-xs text-primary font-app-segoe;
+    @apply font-bold text-xs text-primary  ;
 }
 
 .ActivitiesActions {
@@ -56,7 +56,7 @@
 }
 
 .TotalDailyMoneySpentLabel-text{
-    @apply text-lg font-bold text-primary font-app-segoe;
+    @apply text-lg font-bold text-primary  ;
 }
 
 .TotalDailyMoneySpent {
@@ -64,7 +64,7 @@
 }
 
 .TotalDailyMoneySpent-text{
-    @apply font-bold text-2xl text-primary font-app-segoe;
+    @apply font-bold text-2xl text-primary  ;
 }
 
 .ActivityItem {
@@ -84,7 +84,7 @@
 }
 
 .ItemIndex-text {
-    @apply font-bold text-primary font-app-segoe;
+    @apply font-bold text-primary  ;
 }
 
 .ItemDesc {
@@ -92,7 +92,7 @@
 }
 
 .ItemDesc-text {
-    @apply overflow-x-hidden pl-1 font-app-segoe text-[12px] text-primary;
+    @apply overflow-x-hidden pl-1   text-[12px] text-primary;
 }
 
 .ItemTotal {

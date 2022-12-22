@@ -5,6 +5,31 @@ dayjs.extend(isToday)
 /** `DayjsWrapper` provides static methods to make working with `dayjs()` easier. */
 export default class DayjsWrapper {
     static currentDate = dayjs()
+
+    static month_map = {
+        0: 'Jan',
+        1: 'Feb',
+        2: 'Mar',
+        3: 'Apr',
+        4: 'May',
+        5: 'Jun',
+        6: 'Jul',
+        7: 'Aug',
+        8: 'Sep',
+        9: 'Oct',
+        10: 'Nov',
+        11: 'Dec',
+    }
+
+    static day_map = {
+        0: 'Mon',
+        1: 'Tue',
+        2: 'Wed',
+        3: 'Thu',
+        4: 'Fri',
+        5: 'Sat',
+        6: 'Sun'
+    }
     /**
      * 
      * @returns a ```Dayjs()``` object with the current date in time
@@ -206,5 +231,25 @@ export default class DayjsWrapper {
             return true
         }
         return false
+    }
+
+    static getCurrentDayDateValue() {
+        return this.getCurrentDate().day()
+    }
+
+    static getPreviousDayDateValue(num) {
+        return this.getPreviousDayDate(num).day()
+    }
+
+    static getNextDayDateValue(num) {
+        return this.getNextDayDate(num).day()
+    }
+
+    static getStartWeekDaysForNextMonth(num) {
+        let start_week_days = [] 
+        
+     //   let nm = this.getNextMonthDate(num).startOf('month')
+    
+        return start_week_days
     }
 }

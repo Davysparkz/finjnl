@@ -25,7 +25,7 @@
 }
 
 .DayTitles span {
-    @apply font-app-segoe font-bold text-primary;
+    @apply  font-bold text-primary;
 }
 
 .ClndrBody {
@@ -41,11 +41,19 @@
 }
 
 .Day {
-    @apply bg-primary-light w-10 h-10;
+    @apply bg-primary-light w-10 h-10 flex flex-col justify-center items-center;
 }
 
 .Week {
     @apply flex justify-around;
+}
+
+.DayAdornment {
+    @apply w-2 h-2 rounded-full bg-green-300;
+}
+
+.DayValue {
+    @apply font-bold text-primary-dark;
 }
 }
 @tailwind utilities;

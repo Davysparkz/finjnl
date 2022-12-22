@@ -2,7 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 //import App from './components/App';
-//import DayActivities from './components/DayActivities';
+//import Activities, {
+//  loader as activitiesLoader
+//} from './routes/activities';
 //import EditDayActivity from './components/EditDayActivity'
 import Clndr from './components/Clndr'
 import reportWebVitals from './reportWebVitals';
@@ -13,12 +15,20 @@ import {
   RouterProvider, 
 } from 'react-router-dom'
 
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route
         path="/"  
-        element={<Clndr />}
+        element={
+          <Clndr />
+        }
     >
+      {/* <Route
+        path="day_activities/:dateId"
+        element={<Activities />}
+        loader={activitiesLoader}  
+      /> */}
     </Route>
   )
 )

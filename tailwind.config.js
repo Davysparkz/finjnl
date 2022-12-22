@@ -1,4 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+const {fontFamily} = require('tailwindcss/defaultTheme')
+
 module.exports = {
   content: [
 	  "./src/**/*.{js, jsx, ts, tsx}", 
@@ -7,6 +9,11 @@ module.exports = {
   theme: {
     fontFamily: {
       'app-segoe': ['"Segoe UI"',],
+      sans: [
+        '"Segoe UI"',
+        'sans-serif',
+        ...fontFamily.sans,
+      ]
     },
     extend: {
       colors: {

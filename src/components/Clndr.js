@@ -1,26 +1,104 @@
 import '../styles/Clndr.css'
+import {useState} from 'react'
+import {ClndrData} from '../utils/clndr_context'
+import DayjsWrapper from '../utils/DayjsWrapper'
 
-function Day() {
+function DayAdornment({isSpentDay, isToday}) {
     return (
         <>
-            <div className="Day">
+             <div className="DayAdornment">
 
-            </div>
+            </div> 
         </>
     )
 }
+
+function DayValue({value}) {
+    return (
+        <>
+            <div className="DayValue">                 
+                <span>{value}</span>      
+            </div> 
+        </>
+    )
+}
+
+function Day({day, handleDayClick}) {
+    return (
+        <>
+            <div className="Day" onClick={(e) => { handleDayClick(e, day) } }> 
+                <DayValue value={day.value}/> 
+                <DayAdornment isSpentDay={day.isSpentDay} isToday={day.isToday}/>             
+            </div> 
+        </>
+    )
+}
+
+function onDayClick(e, day) {
+    console.log(day.value)
+}
+
 
 function Week() {
     return (
         <>
             <div className="Week">
-                <Day />
-                <Day />
-                <Day />
-                <Day />
-                <Day />
-                <Day />
-                <Day />
+                <Day 
+                    day={{ 
+                        value: 30,
+                        isSpentDay: false,
+                        isToday: false
+                    }}
+                    handleDayClick={onDayClick}
+                />
+                <Day 
+                    day={{ 
+                        value: 30,
+                        isSpentDay: false,
+                        isToday: false
+                    }}
+                    handleDayClick={onDayClick}
+                />
+                <Day 
+                    day={{ 
+                        value: 30,
+                        isSpentDay: false,
+                        isToday: false
+                    }}
+                    handleDayClick={onDayClick}
+                />
+                <Day 
+                    day={{ 
+                        value: 30,
+                        isSpentDay: false,
+                        isToday: false
+                    }}
+                    handleDayClick={onDayClick}
+                />
+                <Day 
+                    day={{ 
+                        value: 30,
+                        isSpentDay: false,
+                        isToday: false
+                    }}
+                    handleDayClick={onDayClick}
+                />
+                <Day 
+                    day={{ 
+                        value: 30,
+                        isSpentDay: false,
+                        isToday: false
+                    }}
+                    handleDayClick={onDayClick}
+                />
+                <Day 
+                    day={{ 
+                        value: 30,
+                        isSpentDay: false,
+                        isToday: false
+                    }}
+                    handleDayClick={onDayClick}
+                />                                                                               
             </div>
         </>
     )
@@ -52,22 +130,29 @@ function ClndrBody() {
 }
 
 function MonthAction() {
+    const [months, ] = useState(['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'])
+
+    const handleMonthChange = (e) => {
+        for (let key in Object.keys(DayjsWrapper.month_map)) {
+            if (e.target.value === key) {
+                // set global object
+                ClndrData.month = key
+                break
+            }
+        }
+    }
+
     return (
         <>
             <div className="MonthAction">
-                <select>
-                    <option>Jan</option>
-                    <option>Feb</option>
-                    <option>Mar</option>
-                    <option>Apr</option>
-                    <option>May</option>
-                    <option>Jun</option>
-                    <option>Jul</option>
-                    <option>Aug</option>
-                    <option>Sep</option>
-                    <option>Oct</option>
-                    <option>Nov</option>
-                    <option>Dec</option>
+                <select
+                    onChange={e => handleMonthChange(e)}
+                >
+                    {
+                        months.map((month, key) => 
+                            <option value={key} key={key}>{month}</option>
+                        )
+                    }
                 </select>
             </div>
         </>
@@ -75,11 +160,24 @@ function MonthAction() {
 }
 
 function YearAction() {
+    const [years, ] = useState([2022, 2023])
+
+    const handleYearChange = (e) => {
+        // @todo: provide a reasonable code here
+        console.log(years[e.target.value])
+    }
+
     return (
         <>
             <div className="YearAction">
-            <select>
-                    <option>2022</option>
+            <select
+                onChange={e => handleYearChange(e)}
+            >
+                    {
+                        years.map((year, key) => 
+                            <option value={key} key={key}>{year}</option>
+                        )
+                    }
                 </select>
             </div>
         </>

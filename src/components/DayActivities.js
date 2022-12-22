@@ -5,7 +5,8 @@ function DayActivityLabel({year, month, day}) {
     return (
         <>
             <div className="DayActivityLabel">
-                 <div className="DayActivityLabel-text">17th Dec, 2022</div>
+                 {/* <div className="DayActivityLabel-text">17th Dec, 2022</div> */}
+                 <div className="DayActivityLabel-text">{day}{" "}{month}{", "}{year}</div>
             </div>
         </>
     )
@@ -150,7 +151,7 @@ function DayActivities({year, month, day}) {
     return (
         <>
             <div className="DayActivities">
-                <DayActivityLabel/>
+                <DayActivityLabel year={year} month={month} day={day}/>
                 <ActivitiesControl />
                 <ActivityItems />
                 <ActivityTotal />
